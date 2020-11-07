@@ -85,7 +85,7 @@ bool leftCheck() {
 
 
 
-void move_right() {
+void move_right(void) {
     uint8_t dis;
     dis = Reflectance_Position(Reflectance_Read(1000));
     while (dis > 3) {
@@ -102,7 +102,7 @@ void move_right() {
     return;
 }
 
-void move_left() {
+void move_left(void) {
     uint8_t dis;
     dis = Reflectance_Position(Reflectance_Read(1000));
     while (dis > 3) {
@@ -116,4 +116,5 @@ void move_left() {
         servo_write();
         dis = Reflectance_Position(Reflectance_Read(1000));
     }
+    return;
 }

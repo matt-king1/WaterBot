@@ -2,6 +2,6 @@
 #define WATER_H_
 
 void config_water()
-void water(time);
+void water(uint16_t time);
 
 #endif //water.h
