@@ -21,7 +21,10 @@ void config_timer(void) { //interrupt every 1 second
 void start_timer(void) {
     TIMER_A0->CTL |= TIMER_A_CTL_MC__UP;
 }
-
+void stop_timer(void) {
+    // use the CTL reg's MC mask to clear all bits in the portion of the register
+    TIMER_A0->CTL &= ~(TIMER_A_CTL_MC__STOP);
+}
 void config_nvic(void)
 {
     NVIC_SetPriority(TA0_N_IRQn, 3);                // set interrupt priority to 3
