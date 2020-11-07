@@ -51,6 +51,9 @@ policies, either expressed or implied, of the FreeBSD Project.
  * @see Clock_GetFreq()
  * @brief  Initialize clock to 48 MHz
  */
+
+#include <stdint.h>
+
 void Clock_Init48MHz(void);
 
 

@@ -2,7 +2,7 @@
 #include "msp.h"
 #include "servo.h"
 
-uint8_t homebase = ; //home base reflectance
+uint8_t homebase = 0; //home base reflectance
 
 void config_water(void) { //configure P2.3 for relay
     P2->SEL0 &= ~0x08;
@@ -18,24 +18,24 @@ void dispense(uint16_t time) {
 }
 
 void water1(void) {
-    uint8_t p1_reflec = ; //find value
-    uint16_t p1_time = ; //how much water is dispensed
+    uint8_t p1_reflec = 0; //find value
+    uint16_t p1_time = 10; //how much water is dispensed
     forward(p1_reflec);
     dispense(p1_time);
     backward(homebase);
 }
 
 void water2(void) {
-    uint8_t p2_reflec = ; //find value
-    uint16_t p2_time = ; //how much water is dispensed
+    uint8_t p2_reflec = 0; //find value
+    uint16_t p2_time = 10; //how much water is dispensed
     forward(p2_reflec);
     dispense(p2_time);
     backward(homebase);
 }
 
 void water3(void) {
-    uint8_t p3_reflec = ; //find value
-    uint16_t p3_time = ; //how much water is dispensed
+    uint8_t p3_reflec = 0; //find value
+    uint16_t p3_time = 10; //how much water is dispensed
     forward(p3_reflec);
     dispense(p3_time);
     backward(homebase);

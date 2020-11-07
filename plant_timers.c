@@ -6,16 +6,18 @@ uint16_t plant1 = 0;
 uint16_t plant2 = 0;
 uint16_t plant3 = 0;
 
-uint32_t plant1_fin = 86400; // one day
-uint16_t plant2_fin = 43200; // 12 hours
-uint32_t plant3_fin = 172800; //2 days
+uint32_t plant1_fin = 15;    // one day  = 86400
+uint16_t plant2_fin = 45;    // 12 hours = 43200
+uint32_t plant3_fin = 120;   // 2 days   = 172800
 
 void config_timer(void) { //interrupt every 1 second
     TIMER_A0->CTL |= TIMER_A_CTL_CLR;               // Clear
     TIMER_A0->CTL |= TIMER_A_CTL_SSEL__SMCLK;       // 3MHz Clock
     TIMER_A0->CTL |= TIMER_A_CTL_ID__8;             // Divide by 2^8
+    TIMER_A0->EX0 |= TIMER_A_EX0_IDEX__2;           // Divide again
+    TIMER_A0->CCTL[1] |= TIMER_A_CCTLN_CCIE;
     //add more for the settings here
-    TIMER_A0->CCR[0]  = TICKS;
+    TIMER_A0->CCR[0] = TICKS;
 }
 
 void start_timer(void) {
