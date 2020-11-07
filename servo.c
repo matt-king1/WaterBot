@@ -38,15 +38,15 @@ void forward(uint8_t stop_condition) {
 void backward(uint8_t stop_condition) {
     uint8_t data; uint8_t dis;
     data = Reflectance_read(1000);
-    while (data != stop_condition) {
+    while (data != stop_condition) { //checks if reflectance is equal to what would signify plant
         dis = Reflectance_Position(data);
-        if (dis > 5) {
+        if (dis > 5) { //checks if straight
             if (leftCheck()) {
                 move_right();
             }
             else {
                 move_left();
-            }
+            } // moves direction needed to be straight
         }
         servo_write();
         servo_write();

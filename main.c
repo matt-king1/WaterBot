@@ -2,6 +2,10 @@
 #include "stdio.h"
 #include "reflectanceArray.h"
 #include "Clock.h"
+#include "servo.h"
+#include "pca9685.h"
+#include "stIMU.h"
+#include "water.h"
 
 /**
  * main.c
