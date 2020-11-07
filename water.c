@@ -17,6 +17,14 @@ void dispense(uint16_t time) {
     P2->OUT |= 0x08; //turn off
 }
 
+void start_timer(void) {
+    TIMER_A0->CTL |= TIMER_A_CTL_MC__UP;    // up mode - R counts to TAxCCR0, starts timer
+}
+
+void stop_timer(void) {
+    TIMER_A0->CTL &= ~(TIMER_A_CTL_MC__STOP);
+}
+
 void water1(void) {
     uint8_t p1_reflec = 0; //find value
     uint16_t p1_time = 10; //how much water is dispensed
