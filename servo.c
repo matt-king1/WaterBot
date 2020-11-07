@@ -1,9 +1,3 @@
-/*
- * servo.c
- *
- *  Created on: Jul 14, 2020
- *      Author: Tyler Davidson
- */
 #include "servo.h"
 #include "reflectanceArray.h"
 #include "pca9685.h"
