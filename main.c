@@ -25,6 +25,7 @@ void main(void)
 void Initialize(void)
 {
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // stop watchdog timer
+    stop_timer();
     Clock_Init48MHz();
     Reflectance_Init();
     config_water();

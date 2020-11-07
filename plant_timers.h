@@ -9,5 +9,6 @@
 void config_timer(void);
 void start_timer(void);
 void config_nvic(void);
+void stop_timer(void);
 
 #endif

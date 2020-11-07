@@ -23,7 +23,7 @@ void forward(uint8_t stop_condition) {
         servo_write();
         servo_write();
         servo_write();
-        servo_write();
+        servo_write(); //fill in these functions
         data = Reflectance_read(1000);
     }
     return;
@@ -49,7 +49,7 @@ void backward(uint8_t stop_condition) {
         servo_write();
         servo_write();
         servo_write();
-        servo_write();
+        servo_write(); //fill in these functions
         data = Reflectance_Read(1000);
     }
     return;
@@ -66,7 +66,7 @@ bool leftCheck() {
     servo_write();
     servo_write();
     servo_write();
-    servo_write();
+    servo_write(); //fill in these functions
     fin = Reflectance_Read(1000);
     fin = Reflecatance_Read(fin)
     if (fin > init) {
@@ -90,7 +90,7 @@ void move_right(void) {
         servo_write();
         servo_write();
         servo_write();
-        servo_write();
+        servo_write(); //fill in these functions
         dis = Reflectance_Position(Reflectance_Read(1000));
     }
     return;
@@ -107,7 +107,7 @@ void move_left(void) {
         servo_write();
         servo_write();
         servo_write();
-        servo_write();
+        servo_write(); //fill in these functions
         dis = Reflectance_Position(Reflectance_Read(1000));
     }
     return;
