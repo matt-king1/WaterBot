@@ -16,7 +16,6 @@ void config_timer(void) { //interrupt every 1 second
     TIMER_A0->CTL |= TIMER_A_CTL_ID__8;             // Divide by 2^8
     TIMER_A0->EX0 |= TIMER_A_EX0_IDEX__2;           // Divide again
     TIMER_A0->CCTL[1] |= TIMER_A_CCTLN_CCIE;
-    //add more for the settings here
     TIMER_A0->CCR[0] = TICKS;
 }
 
