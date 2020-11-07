@@ -4,7 +4,7 @@
 
 uint8_t homebase = ; //home base reflectance
 
-void config_water(void) { //configure P2.3 for relay
+void config_water(void) { //P2.3 for relay
     P2->SEL0 &= ~0x08;
     P2->SEL1 &= ~0x08; //gpio
     P2->DIR |= 0x08; //output
