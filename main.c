@@ -4,32 +4,32 @@
 #include "Clock.h"
 #include "servo.h"
 #include "pca9685.h"
-#include "stIMU.h"
 #include "water.h"
+#include "plant_timers.h"
 
 /**
  * main.c
  */
 
-void Initialize();
 
 void main(void)
 {
     Initialize();
 
-	uint8_t data, light_data;
 	while(1)
 	{
-	    data = Reflectance_Read(1000);
-	    light_data = LIGHT_BAR(data, 0);
-	    printf("Data: %i \n LightData: \i", data, light_data);
+
 	}
 }
 
-void Initialize()
+void Initialize(void)
 {
     WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // stop watchdog timer
     Clock_Init48MHz();
-
     Reflectance_Init();
+    config_water();
+    pca9685_init();
+    config_timer();
+    config_nvic();
+    start_timer();
 }

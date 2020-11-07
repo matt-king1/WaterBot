@@ -1,7 +1,14 @@
 #ifndef WATER_H_
 #define WATER_H_
 
-void config_water()
-void water(uint16_t time);
+#include "clock.h"
+#include "msp.h"
+#include "servo.h"
+
+void config_water(void);
+void dispense(uint16_t time);
+void water1(void);
+void water2(void);
+void water3(void);
 
 #endif //water.h

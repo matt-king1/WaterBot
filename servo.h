@@ -9,6 +9,7 @@
 #define SERVO_H_
 
 #include "pca9685.h"
+#include "reflectanceArray.h"
 
 //Servo Definitions
 //-----Servo-----Channel
