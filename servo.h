@@ -31,8 +31,10 @@
 void forward(uint8_t stop_condition);
 void backward(uint8_t stop_condition);
 bool leftCheck();
-void move_right();
-void move_left();
+void left(void);
+void right();
+void move_right(void);
+void move_left(void);
 
 
 #endif /* SERVO_H_ */

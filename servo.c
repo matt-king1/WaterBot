@@ -29,6 +29,39 @@ void forward(uint8_t stop_condition) {
     return;
 }
 
+void left(void) {
+    uint8_t distance_fin = 0;// temp, how close to plant pot in order to water
+    distance = ultrasonic.read(); // not final function name, needs to be updated
+    while (distance > distance_fin) {
+        servo_write(0, 45);
+        servo_write(1, 45);
+        servo_write(2, 45);
+        servo_write(3, 45);
+        servo_write(4, 45);
+        servo_write(5, 45);
+        servo_write(6, 45);
+        servo_write(7, 45); //fill in these functions
+        distance = ultrasonic.read();
+    }
+    return;
+}
+
+void right(uint8_t stop_condition) {
+    data = Reflectance_Read(1000);
+    while (data != stop_condition) {
+        servo_write(0, 45);
+        servo_write(1, 45);
+        servo_write(2, 45);
+        servo_write(3, 45);
+        servo_write(4, 45);
+        servo_write(5, 45);
+        servo_write(6, 45);
+        servo_write(7, 45); //fill in these functions
+        data = Reflectance_Read(1000);
+    }
+    return;
+}
+
 void backward(uint8_t stop_condition) {
     uint8_t data; uint8_t dis;
     data = Reflectance_Read(1000);
