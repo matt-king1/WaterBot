@@ -14,9 +14,7 @@ uint32_t plant3_fin = 120;   // 2 days   = 172800
 
 void config_timer(void) { //interrupt every 1 second
     TIMER_A0->CTL |= TIMER_A_CTL_CLR;               // Clear
-    TIMER_A0->CTL |= TIMER_A_CTL_SSEL__SMCLK;       // 3MHz Clock
-    TIMER_A0->CTL |= TIMER_A_CTL_ID__8;             // Divide by 2^8
-    TIMER_A0->EX0 |= TIMER_A_EX0_IDEX__8;           // Divide again
+    TIMER_A0->CTL |= TIMER_A_CTL_SSEL__ACLK;       // 32KHz Clock
     TIMER_A0->CCTL[1] |= TIMER_A_CCTLN_CCIE;
     TIMER_A0->CCR[0] = TICKS;
 }

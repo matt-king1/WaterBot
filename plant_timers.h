@@ -4,7 +4,7 @@
 #include"msp.h"
 #include "water.h"
 
-#define TICKS ((uint16_t) 0xB71B) // period of 1s
+#define TICKS ((uint16_t) 0x7D00) // period of 1s
 
 void config_timer(void);
 void start_timer(void);
