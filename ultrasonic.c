@@ -45,6 +45,6 @@ uint16_t readEcho(void)
     while(P4->IN & ECHO); // wait for a LOW on ECHO pin
     time = stopUltrasonicTimer();
 
-    return time;
+    return ((time/3.0)*0.034)/2.0;
 }
 
