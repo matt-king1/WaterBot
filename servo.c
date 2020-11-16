@@ -30,8 +30,8 @@ void forward(uint8_t stop_condition) {
 }
 
 void left(void) {
-    uint8_t distance_fin = 0;// temp, how close to plant pot in order to water
-    distance = ultrasonic.read(); // not final function name, needs to be updated
+    uint8_t distance_fin = 1;// how close to plant pot in order to water 1cm
+    distance = readEcho();
     while (distance > distance_fin) {
         servo_write(0, 45);
         servo_write(1, 45);

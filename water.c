@@ -24,7 +24,9 @@ void water1(void) {
     uint8_t p1_reflec = 0; //find value
     uint16_t p1_time = 10; //how much water is dispensed
     forward(p1_reflec);
+    left();
     dispense(p1_time, p1_reflec);
+    right(p1_reflec);
     backward(homebase);
 }
 
@@ -32,7 +34,9 @@ void water2(void) {
     uint8_t p2_reflec = 0; //find value
     uint16_t p2_time = 10; //how much water is dispensed
     forward(p2_reflec);
+    left();
     dispense(p2_time, p2_reflec);
+    right(p2_reflec);
     backward(homebase);
 }
 
@@ -40,6 +44,8 @@ void water3(void) {
     uint8_t p3_reflec = 0; //find value
     uint16_t p3_time = 10; //how much water is dispensed
     forward(p3_reflec);
+    left();
     dispense(p3_time, p3_reflec);
+    right(p3_reflec);
     backward(homebase);
 }

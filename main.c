@@ -31,9 +31,11 @@ void Initialize(void)
     stop_timer();
     Clock_Init48MHz();
     Reflectance_Init();
+    configUltrasonic();
     config_water();
     pca9685_init();
     config_timer();
+    configUltrasonicTimer();
     config_nvic();
     start_timer();
 }
