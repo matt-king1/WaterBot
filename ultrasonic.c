@@ -7,7 +7,7 @@
 // P4.2 - Echo
 #define ECHO (1<<2)
 
-uint8_t time;
+uint16_t time;
 
 void configUltrasonic(void)
 {
@@ -16,16 +16,35 @@ void configUltrasonic(void)
     P4->DIR &= ~ECHO;   // set P4.2 as an input
 }
 
-uint8_t readEcho(void)
+void configUltrasonicTimer(void)
+{
+    TIMER_A1->CCTL[0] = TIMER_A_CCTLN_CCIE;
+    TIMER_A1->CTL = TIMER_A_CTL_SSEL__SMCLK | TIMER_A_CTL_MC__STOP; // SMCLK, up mode
+}
+
+void startUltrasonicTimer(void)
+{
+    TIMER_A1->CTL |= TIMER_A_CTL_CLR;
+    TIMER_A1->CTL |= TIMER_A_CTL_MC__UP;
+}
+
+uint16_t stopUltrasonicTimer(void)
+{
+    TIMER_A1->CTL |= TIMER_A_CTL_MC__STOP;
+    return TIMER_A1->R;
+}
+
+uint16_t readEcho(void)
 {
     P4->OUT |= TRIG;    // set P4.1 output to high
     Clock_Delay1us(10); // delay for 10uS
     P4->OUT &= ~TRIG;   // set P4.1 output to low
 
     while(!(P4->IN & ECHO)); // wait for a HIGH on ECHO pin
-    // start timer
+    startUltrasonicTimer();
     while(P4->IN & ECHO); // wait for a LOW on ECHO pin
-    // time = stopTimer;
+    time = stopUltrasonicTimer();
 
     return time;
 }
+
