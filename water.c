@@ -15,7 +15,7 @@ void config_water(void) { //P2.3 for relay
 void dispense(uint16_t time, uint8_t stop_condition) {
     left();
     P2->OUT &= ~0x08; //relay on
-    delay(time); //delays time/8000 ms
+    Clock_Delay1ms(time); //delays time/8000 ms
     P2->OUT |= 0x08; //turn off
     right(stop_condition);
 }
