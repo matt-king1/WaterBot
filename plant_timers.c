@@ -6,6 +6,8 @@ uint16_t plant1 = 0;
 uint16_t plant2 = 0;
 uint16_t plant3 = 0;
 
+bool out = false;
+
 uint32_t plant1_fin = 15;    // one day  = 86400
 uint16_t plant2_fin = 45;    // 12 hours = 43200
 uint32_t plant3_fin = 120;   // 2 days   = 172800
@@ -14,7 +16,7 @@ void config_timer(void) { //interrupt every 1 second
     TIMER_A0->CTL |= TIMER_A_CTL_CLR;               // Clear
     TIMER_A0->CTL |= TIMER_A_CTL_SSEL__SMCLK;       // 3MHz Clock
     TIMER_A0->CTL |= TIMER_A_CTL_ID__8;             // Divide by 2^8
-    TIMER_A0->EX0 |= TIMER_A_EX0_IDEX__2;           // Divide again
+    TIMER_A0->EX0 |= TIMER_A_EX0_IDEX__8;           // Divide again
     TIMER_A0->CCTL[1] |= TIMER_A_CCTLN_CCIE;
     TIMER_A0->CCR[0] = TICKS;
 }
@@ -33,7 +35,7 @@ void config_nvic(void)
     __enable_interrupt();                           // global interrupt enable
 }
 
-void TA0_N_IRQHandler(void)
+void TA0_N_IRQHandler(void) // interrupt triggered every 0.25s
 {
     __disable_interrupt();                          // global interrupt disable
     if(TIMER_A0->CCTL[1] & TIMER_A_CCTLN_CCIFG)
@@ -53,6 +55,16 @@ void TA0_N_IRQHandler(void)
             water3();
         }
         else plant3++;
+
+
+        if(out)
+            P3->OUT |= BIT5;
+        else
+            P3->OUT &= ~BIT5;
+        out = !out;
+
+        //printf("out = %b", out);
+
         TIMER_A0->CCTL[1] &= ~TIMER_A_CCTLN_CCIFG;  // clear flag
     }
     __enable_interrupt();                           // global interrupt enable

@@ -15,10 +15,13 @@
 void main(void)
 {
     Initialize();
+    P3->DIR |= BIT5; // Pin 3.5 is an output
 
+    uint8_t data; // variable to store reflectance values
 	while(1)
 	{
-
+	    data = Reflectance_Read(1000); // read reflectance
+	    printf("Data: %d \n", data); // print reflectance
 	}
 }
 
