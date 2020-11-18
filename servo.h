@@ -32,7 +32,7 @@ void forward(uint8_t stop_condition);
 void backward(uint8_t stop_condition);
 bool leftCheck();
 void left(void);
-void right();
+void right(uint8_t stop_condition);
 void move_right(void);
 void move_left(void);
 

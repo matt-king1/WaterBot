@@ -30,6 +30,7 @@ void forward(uint8_t stop_condition) {
 }
 
 void left(void) {
+    uint8_t distance;
     uint8_t distance_fin = 1;// how close to plant pot in order to water 1cm
     distance = readEcho();
     while (distance > distance_fin) {
@@ -41,12 +42,13 @@ void left(void) {
         servo_write(5, 45);
         servo_write(6, 45);
         servo_write(7, 45); //fill in these functions
-        distance = ultrasonic.read();
+        distance = readEcho();
     }
     return;
 }
 
 void right(uint8_t stop_condition) {
+    uint8_t data;
     data = Reflectance_Read(1000);
     while (data != stop_condition) {
         servo_write(0, 45);

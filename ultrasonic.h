@@ -7,6 +7,6 @@ void configUltrasonic(void);    // config registers and set up
 void configUltrasonicTimer(void);
 void startUltrasonicTimer(void);
 uint16_t stopUltrasonicTimer(void);
-uint16_t readEcho(void);         // pulse the trig pin HIGH for 10us and read the echo pin pulse
+double readEcho(void);         // pulse the trig pin HIGH for 10us and read the echo pin pulse
 
 #endif

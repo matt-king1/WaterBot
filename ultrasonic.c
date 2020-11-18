@@ -1,6 +1,7 @@
 #include "ultrasonic.h"
 #include "msp.h"
 #include "clock.h"
+#include <stdio.h>
 
 // P4.1 - Trig
 #define TRIG (1<<1)
@@ -18,33 +19,35 @@ void configUltrasonic(void)
 
 void configUltrasonicTimer(void)
 {
-    TIMER_A1->CCTL[0] = TIMER_A_CCTLN_CCIE;
-    TIMER_A1->CTL = TIMER_A_CTL_SSEL__SMCLK | TIMER_A_CTL_MC__STOP; // SMCLK, up mode
+    TIMER_A1->CTL = TIMER_A_CTL_SSEL__SMCLK | TIMER_A_CTL_MC__STOP; // SMCLK, stop mode
+    TIMER_A1->CCR[0] = 0xFFFF;
 }
 
 void startUltrasonicTimer(void)
 {
-    TIMER_A1->CTL |= TIMER_A_CTL_CLR;
-    TIMER_A1->CTL |= TIMER_A_CTL_MC__UP;
+    TIMER_A1->CTL |= TIMER_A_CTL_CLR;       // reset counter back to 0
+    TIMER_A1->CTL |= TIMER_A_CTL_MC__UP;    // start counter
 }
 
 uint16_t stopUltrasonicTimer(void)
 {
-    TIMER_A1->CTL |= TIMER_A_CTL_MC__STOP;
-    return TIMER_A1->R;
+    TIMER_A1->CTL |= TIMER_A_CTL_MC__STOP;  // stop counter
+    return TIMER_A1->R;                     // return count
 }
 
-uint16_t readEcho(void)
+double readEcho(void)
 {
     P4->OUT |= TRIG;    // set P4.1 output to high
     Clock_Delay1us(10); // delay for 10uS
     P4->OUT &= ~TRIG;   // set P4.1 output to low
+
 
     while(!(P4->IN & ECHO)); // wait for a HIGH on ECHO pin
     startUltrasonicTimer();
     while(P4->IN & ECHO); // wait for a LOW on ECHO pin
     time = stopUltrasonicTimer();
 
-    return ((time/3.0)*0.034)/2.0;
-}
+    return (((double)time/30.0)*0.034)/2.0; // make sure to use decimals to avoid integer division
+                                   //
+}                                  // divide time by 3Hz because SMCLK is 3MHz, so that give us a time unit of microsecond then just follow formula
 

@@ -8,8 +8,8 @@ uint16_t plant3 = 0;
 
 bool out = false;
 
-uint32_t plant1_fin = 15;    // one day  = 86400
-uint16_t plant2_fin = 45;    // 12 hours = 43200
+uint32_t plant1_fin = 60;    // one day  = 86400
+uint16_t plant2_fin = 90;    // 12 hours = 43200
 uint32_t plant3_fin = 120;   // 2 days   = 172800
 
 void config_timer(void) { //interrupt every 1 second

@@ -6,22 +6,25 @@
 #include "pca9685.h"
 #include "water.h"
 #include "plant_timers.h"
+#include "ultrasonic.h"
 
 /**
  * main.c
  */
 
 
+void Initialize(void);
+
 void main(void)
 {
     Initialize();
-    P3->DIR |= BIT5; // Pin 3.5 is an output
+    P3->DIR |= BIT6; // Pin 3.5 is an output
 
-    uint8_t data; // variable to store reflectance values
+    double data; // variable to store reflectance values
 	while(1)
 	{
-	    data = Reflectance_Read(1000); // read reflectance
-	    printf("Data: %d \n", data); // print reflectance
+	    data = readEcho();
+	    printf("Data: %f \n", data); // print distance
 	}
 }
 
