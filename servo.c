@@ -30,8 +30,8 @@ void forward(uint8_t stop_condition) {
 }
 
 void left(void) {
-    uint8_t distance;
-    uint8_t distance_fin = 1;// how close to plant pot in order to water 1cm
+    double distance;
+    double distance_fin = 1;// how close to plant pot in order to water 1cm
     distance = readEcho();
     while (distance > distance_fin) {
         servo_write(0, 45);
