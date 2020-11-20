@@ -3,6 +3,7 @@
 #include "Clock.h"
 #include "reflectanceArray.h"
 
+
 void Reflectance_Init(void){
   P5->SEL0 &= ~0x08;
   P5->SEL1 &= ~0x08;    // configure P5.3 as GPIO
@@ -11,6 +12,8 @@ void Reflectance_Init(void){
   P7->SEL0 = 0x00;
   P7->SEL1 = 0x00;      // configure P7.7-P7.0 as GPIO
   P7->DIR = 0x00;       // make P7.7-P7.0 in
+
+  configReflectanceTimer();
 }
 
 
@@ -23,14 +26,13 @@ uint16_t* Reflectance_Read(void){
     return result;
 }
 
-
 const int32_t Mask[8] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
 bool Reflectance_Position(uint16_t* data){
     uint16_t result;
     if (data[3] >= data[4])
         result = data[3] - data[4];
     else result = data[4] - data[3];
-    if (result < ) {
+    if (result < 1) {
         return true;
     }
     return false;
@@ -44,26 +46,18 @@ void Reflectance_Start(void){
   P7->DIR = 0x00;       // make P7.7-P7.0 in
 }
 
-
-// ------------Reflectance_End------------
-// Finish reading the eight sensors
-// Read sensors
-// Turn off the 8 IR LEDs
-// Input: none
-// Output: sensor readings
-// Assumes: Reflectance_Init() has been called
-// Assumes: Reflectance_Start() was called 1 ms ago
-
+int i;
 uint16_t* Reflectance_End(void){
   uint8_t result;
   result = P7->IN; // 1 means black, 0 means white
   uint16_t time_array[8] = {0,0,0,0,0,0,0,0};
   while(result) {
       for (i = 0; i<8; i++) {
-          if ((result & ~mask[i])&&(time_array[i] == 0)){
-              time_array[i] = TIMER_A2->R;
+          if ((~result & Mask[i])&&(time_array[i] == 0)){
+              time_array[i] = TIMER_A2->R/30.0;
           }
       }
+      result = P7->IN;
   }
   stopReflectanceTimer();
   P5->OUT &= ~0x08;     // turn off 8 IR LEDs

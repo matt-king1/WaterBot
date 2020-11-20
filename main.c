@@ -20,11 +20,12 @@ void main(void)
     Initialize();
     P3->DIR |= BIT6; // Pin 3.5 is an output
 
-    int data; // variable to store reflectance values
+    //uint16_t* data; // variable to store reflectance values
 	while(1)
 	{
-	    data = Reflectance_Read(1000);
-	    printf("Data: %i \n", data); // print distance
+	    //data = Reflectance_Read();
+	    //printf("S1: %d S2: %d S3: %d S4: %d S5: %d S6: %d S7: %d S8: %d\n", data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]); // print distance
+	    //Clock_Delay1ms(10);
 	}
 }
 
@@ -39,7 +40,6 @@ void Initialize(void)
     pca9685_init();
     config_timer();
     configUltrasonicTimer();
-    configReflectanceTimer();
     config_nvic();
     start_timer();
 }

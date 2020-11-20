@@ -4,18 +4,17 @@
 #include "ultrasonic.h"
 
 void forward(uint16_t stop_condition) {
-    uint16_t* data; bool dis;
+    uint16_t* data;
     data = Reflectance_Read();
-    dis = Reflectance_Position(data);
-    while ((data[3] > stop_condition + 0)&(data[3]< stop_condition -0)) {
-        while (!dis) {
-            if (leftCheck()) {
-                move_right();
-            }
-            else {
-                move_left();
-            }
-        }
+    while ((data[3] < stop_condition + 0)){ // &(data[3]< stop_condition -0)) {
+//        while (!dis) {
+//            if (leftCheck()) {
+//                move_right(stop_condition);
+//            }
+//            else {
+//                move_left(stop_condition);
+//            }
+//        }
         servo_write(0, 45);
         servo_write(1, 45);
         servo_write(2, 45);
@@ -50,7 +49,7 @@ void left(void) {
 void right(uint16_t stop_condition) {
     uint16_t* data;
     data = Reflectance_Read();
-    while (data[4] > stop_condition + 0)&(data[4]< stop_condition -0) {
+    while ((data[4] < stop_condition + 0)){ // && (data[4]< stop_condition -0)) {
         servo_write(0, 45);
         servo_write(1, 45);
         servo_write(2, 45);
@@ -65,17 +64,17 @@ void right(uint16_t stop_condition) {
 }
 
 void backward(uint16_t stop_condition) {
-    uint16_t* data; bool dis;
+    uint16_t* data;
     data = Reflectance_Read();
-    while ((data[3] > stop_condition + 0)&(data[3]< stop_condition -0)) {
-            if (!dis) {
-                if (leftCheck()) {
-                    move_right();
-                }
-                else {
-                    move_left();
-                }
-            }
+    while ((data[3] < stop_condition + 0)){ //&&(data[3]< stop_condition -0)) {
+//            if (!dis) {
+//                if (leftCheck()) {
+//                    move_right(stop_condition);
+//                }
+//                else {
+//                    move_left(stop_condition);
+//                }
+//            }
             servo_write(0, 45);
             servo_write(1, 45);
             servo_write(2, 45);
@@ -89,9 +88,10 @@ void backward(uint16_t stop_condition) {
     return;
 }
 
+int i;
 bool leftCheck() {
     uint16_t* data;
-    uint_t mid = 0;
+    uint8_t mid = 0;
     data = Reflectance_Read();
     for (i = 0; i<8; i++) {
         if (data[i+1]>data[i]) {
@@ -105,10 +105,10 @@ bool leftCheck() {
 
 
 
-void move_right(void) {
+void move_right(uint16_t stop_condition) {
     uint16_t* data;
     data = Reflectance_Read();
-    while (data[4] > stop_condition + 0)&(data[4]< stop_condition -0) {
+    while ((data[4] > stop_condition + 0)&&(data[4]< stop_condition -0)) {
         servo_write(0, 45);
         servo_write(1, 45);
         servo_write(2, 45);
@@ -122,10 +122,10 @@ void move_right(void) {
     return;
 }
 
-void move_left(void) {
+void move_left(uint16_t stop_condition) {
     uint16_t* data;
         data = Reflectance_Read();
-        while (data[3] > stop_condition + 0)&(data[3]< stop_condition -0) {
+        while ((data[3] > stop_condition + 0)&&(data[3]< stop_condition -0)) {
             servo_write(0, 45);
             servo_write(1, 45);
             servo_write(2, 45);

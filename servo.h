@@ -28,13 +28,13 @@
 //URA-> Upper Right Arm
 //LLL-> Lower Left Leg
 //etc.
-void forward(uint8_t stop_condition);
-void backward(uint8_t stop_condition);
+void forward(uint16_t stop_condition);
+void backward(uint16_t stop_condition);
 bool leftCheck();
 void left(void);
-void right(uint8_t stop_condition);
-void move_right(void);
-void move_left(void);
+void right(uint16_t stop_condition);
+void move_right(uint16_t stop_condition);
+void move_left(uint16_t stop_condition);
 
 
 #endif /* SERVO_H_ */

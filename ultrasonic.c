@@ -26,7 +26,7 @@ void configUltrasonicTimer(void)
 void startUltrasonicTimer(void)
 {
     TIMER_A1->CTL |= TIMER_A_CTL_CLR;       // reset counter back to 0
-    TIMER_A1->CTL |= TIMER_A_CTL_MC__UP | TIMER_A_CTL_SSEL_SMCLK;    // start counter
+    TIMER_A1->CTL |= TIMER_A_CTL_MC__UP | TIMER_A_CTL_SSEL__SMCLK;    // start counter
 }
 
 uint16_t stopUltrasonicTimer(void)

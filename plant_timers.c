@@ -8,7 +8,7 @@ uint16_t plant3 = 0;
 
 bool out = false;
 
-uint32_t plant1_fin = 150;    // one day  = 86400
+uint32_t plant1_fin = 60;    // one day  = 86400
 uint16_t plant2_fin = 170;    // 12 hours = 43200
 uint32_t plant3_fin = 190;   // 2 days   = 172800
 
