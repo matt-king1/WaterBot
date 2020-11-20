@@ -133,11 +133,21 @@ void Reflectance_Start(void){
 // Output: sensor readings
 // Assumes: Reflectance_Init() has been called
 // Assumes: Reflectance_Start() was called 1 ms ago
+
 uint8_t Reflectance_End(void){
-uint8_t result;
-  result = P7->IN;      // 1 means black, 0 means white
+  uint8_t result;
+  result = P7->IN; // 1 means black, 0 means white
+  uint16_t time_array[8] = {0,0,0,0,0,0,0,0};
+  while(result) {
+      for (i = 0; i<8; i++) {
+          if ((result & ~mask[i])&&(time_array[i] == 0)){
+              time_array[i] = TIMER_A2->R;
+          }
+      }
+  }
+  stopReflectanceTimer();
   P5->OUT &= ~0x08;     // turn off 8 IR LEDs
-  return result;
+  return time_array;
 }
 
 void configReflectanceTimer(void)
