@@ -13,9 +13,9 @@ void Reflectance_Init(void){
   P7->DIR = 0x00;       // make P7.7-P7.0 in
 }
 
+
 uint16_t* Reflectance_Read(void){
     uint16_t* result;
-
     Reflectance_Start();
     startReflectanceTimer();
     result = Reflectance_End();
@@ -24,28 +24,17 @@ uint16_t* Reflectance_Read(void){
 }
 
 
-//const int32_t WeightIn[8] = {1312, 937, 562, 187, -188, -563, -938, -1313};
-//const int32_t Weight[8] = {332, 237, 142, 47, -47, -142, -237, -332};
-//const int32_t Mask[8] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
-//// Perform sensor integration
-//// Input: data is 8-bit result from line sensor
-//// Output: position in 0.1mm relative to center of line
-//int32_t Reflectance_Position(uint8_t data){
-//  uint32_t i; int32_t sum,count;
-//  if(data){ // calculate only if some active
-//    sum = 0; count=0;
-//    for(i=0;i<8;i++){
-//      if(data&Mask[i]){
-//        sum += Weight[i];
-//        count++;
-//      }
-//    }
-//    return sum/count;
-//  }else{
-//   return Weight[0]+1; // guess right
-//  }
-//}
-
+const int32_t Mask[8] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+bool Reflectance_Position(uint16_t* data){
+    uint16_t result;
+    if (data[3] >= data[4])
+        result = data[3] - data[4];
+    else result = data[4] - data[3];
+    if (result < ) {
+        return true;
+    }
+    return false;
+}
 
 void Reflectance_Start(void){
   P5->OUT |= 0x08;      // turn on 8 IR LEDs
@@ -54,6 +43,16 @@ void Reflectance_Start(void){
   Clock_Delay1us(10);   // wait 10 us
   P7->DIR = 0x00;       // make P7.7-P7.0 in
 }
+
+
+// ------------Reflectance_End------------
+// Finish reading the eight sensors
+// Read sensors
+// Turn off the 8 IR LEDs
+// Input: none
+// Output: sensor readings
+// Assumes: Reflectance_Init() has been called
+// Assumes: Reflectance_Start() was called 1 ms ago
 
 uint16_t* Reflectance_End(void){
   uint8_t result;
@@ -86,5 +85,4 @@ void startReflectanceTimer(void)
 void stopReflectanceTimer(void)
 {
     TIMER_A2->CTL = TIMER_A_CTL_MC__STOP;
-    return TIMER_A2->R;
 }

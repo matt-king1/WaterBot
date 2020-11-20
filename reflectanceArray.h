@@ -6,14 +6,11 @@ void Reflectance_Init(void);
 uint16_t* Reflectance_Read(void);
 
 
-uint8_t Reflectance_Center(uint32_t time);
-
-
-int32_t Reflectance_Position(uint8_t data);
+bool Reflectance_Position(uint8_t data);
 
 void Reflectance_Start(void);
 
-void Reflectance_End(void);
+uint16_t* Reflectance_End(void);
 
 void configReflectanceTimer(void);
 void startReflectanceTimer(void);

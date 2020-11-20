@@ -12,7 +12,7 @@ void config_water(void) { //P2.3 for relay
     P2->DS |= 0x08; //high current
 }
 
-void dispense(uint16_t time, uint8_t stop_condition) {
+void dispense(uint16_t time, uint16_t stop_condition) {
     left();
     P2->OUT &= ~0x08; //relay on
     Clock_Delay1ms(time); //delays time ms
@@ -21,7 +21,7 @@ void dispense(uint16_t time, uint8_t stop_condition) {
 }
 
 void water1(void) {
-    uint8_t p1_reflec = 0; //find value
+    uint16_t p1_reflec = 0; //find value
     uint16_t p1_time = 10; //how much water is dispensed
     forward(p1_reflec);
     left();
@@ -31,7 +31,7 @@ void water1(void) {
 }
 
 void water2(void) {
-    uint8_t p2_reflec = 0; //find value
+    uint16_t p2_reflec = 0; //find value
     uint16_t p2_time = 10; //how much water is dispensed
     forward(p2_reflec);
     left();
@@ -41,7 +41,7 @@ void water2(void) {
 }
 
 void water3(void) {
-    uint8_t p3_reflec = 0; //find value
+    uint16_t p3_reflec = 0; //find value
     uint16_t p3_time = 10; //how much water is dispensed
     forward(p3_reflec);
     left();

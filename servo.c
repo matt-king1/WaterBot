@@ -3,12 +3,12 @@
 #include "pca9685.h"
 #include "ultrasonic.h"
 
-void forward(uint8_t stop_condition) {
-    uint8_t data; uint8_t dis;
-    data = Reflectance_Read(1000);
-    while (data != stop_condition) {
-        dis = Reflectance_Position(data);
-        if (dis > 5) {
+void forward(uint16_t stop_condition) {
+    uint16_t* data; bool dis;
+    data = Reflectance_Read();
+    dis = Reflectance_Position(data);
+    while ((data[3] > stop_condition + 0)&(data[3]< stop_condition -0)) {
+        while (!dis) {
             if (leftCheck()) {
                 move_right();
             }
@@ -24,7 +24,7 @@ void forward(uint8_t stop_condition) {
         servo_write(5, 45);
         servo_write(6, 45);
         servo_write(7, 45); //fill in these functions
-        data = Reflectance_Read(1000);
+        data = Reflectance_Read();
     }
     return;
 }
@@ -47,10 +47,10 @@ void left(void) {
     return;
 }
 
-void right(uint8_t stop_condition) {
-    uint8_t data;
-    data = Reflectance_Read(1000);
-    while (data != stop_condition) {
+void right(uint16_t stop_condition) {
+    uint16_t* data;
+    data = Reflectance_Read();
+    while (data[4] > stop_condition + 0)&(data[4]< stop_condition -0) {
         servo_write(0, 45);
         servo_write(1, 45);
         servo_write(2, 45);
@@ -59,65 +59,56 @@ void right(uint8_t stop_condition) {
         servo_write(5, 45);
         servo_write(6, 45);
         servo_write(7, 45); //fill in these functions
-        data = Reflectance_Read(1000);
+        data = Reflectance_Read();
     }
     return;
 }
 
-void backward(uint8_t stop_condition) {
-    uint8_t data; uint8_t dis;
-    data = Reflectance_Read(1000);
-    while (data != stop_condition) { //checks if reflectance is equal to what would signify plant
-        dis = Reflectance_Position(data);
-        if (dis > 5) { //checks if straight
-            if (leftCheck()) {
-                move_right();
+void backward(uint16_t stop_condition) {
+    uint16_t* data; bool dis;
+    data = Reflectance_Read();
+    while ((data[3] > stop_condition + 0)&(data[3]< stop_condition -0)) {
+            if (!dis) {
+                if (leftCheck()) {
+                    move_right();
+                }
+                else {
+                    move_left();
+                }
             }
-            else {
-                move_left();
-            } // moves direction needed to be straight
+            servo_write(0, 45);
+            servo_write(1, 45);
+            servo_write(2, 45);
+            servo_write(3, 45);
+            servo_write(4, 45);
+            servo_write(5, 45);
+            servo_write(6, 45);
+            servo_write(7, 45); //fill in these functions
+            data = Reflectance_Read();
         }
-        servo_write(0, 45);
-        servo_write(1, 45);
-        servo_write(2, 45);
-        servo_write(3, 45);
-        servo_write(4, 45);
-        servo_write(5, 45);
-        servo_write(6, 45);
-        servo_write(7, 45); //fill in these functions
-        data = Reflectance_Read(1000);
-    }
     return;
 }
 
 bool leftCheck() {
-    uint8_t init; uint8_t fin;
-    init = Reflectance_Read(1000);
-    init = Reflectance_Position(init);
-    servo_write(0, 45);
-    servo_write(1, 45);
-    servo_write(2, 45);
-    servo_write(3, 45);
-    servo_write(4, 45);
-    servo_write(5, 45);
-    servo_write(6, 45);
-    servo_write(7, 45); //fill in these functions
-    fin = Reflectance_Read(1000);
-    fin = Reflectance_Read(fin);
-    if (fin > init) {
+    uint16_t* data;
+    uint_t mid = 0;
+    data = Reflectance_Read();
+    for (i = 0; i<8; i++) {
+        if (data[i+1]>data[i]) {
+            mid++;
+        }
+    }
+    if (mid > 4)
         return false;
-    }
-    else {
-        return true;
-    }
+    return true;
 }
 
 
 
 void move_right(void) {
-    uint8_t dis;
-    dis = Reflectance_Position(Reflectance_Read(1000));
-    while (dis > 3) {
+    uint16_t* data;
+    data = Reflectance_Read();
+    while (data[4] > stop_condition + 0)&(data[4]< stop_condition -0) {
         servo_write(0, 45);
         servo_write(1, 45);
         servo_write(2, 45);
@@ -126,24 +117,24 @@ void move_right(void) {
         servo_write(5, 45);
         servo_write(6, 45);
         servo_write(7, 45); //fill in these functions
-        dis = Reflectance_Position(Reflectance_Read(1000));
+        data = Reflectance_Read();
     }
     return;
 }
 
 void move_left(void) {
-    uint8_t dis;
-    dis = Reflectance_Position(Reflectance_Read(1000));
-    while (dis > 3) {
-        servo_write(0, 45);
-        servo_write(1, 45);
-        servo_write(2, 45);
-        servo_write(3, 45);
-        servo_write(4, 45);
-        servo_write(5, 45);
-        servo_write(6, 45);
-        servo_write(7, 45); //fill in these functions
-        dis = Reflectance_Position(Reflectance_Read(1000));
-    }
-    return;
+    uint16_t* data;
+        data = Reflectance_Read();
+        while (data[3] > stop_condition + 0)&(data[3]< stop_condition -0) {
+            servo_write(0, 45);
+            servo_write(1, 45);
+            servo_write(2, 45);
+            servo_write(3, 45);
+            servo_write(4, 45);
+            servo_write(5, 45);
+            servo_write(6, 45);
+            servo_write(7, 45); //fill in these functions
+            data = Reflectance_Read();
+     }
+     return;
 }
