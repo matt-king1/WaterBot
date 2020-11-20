@@ -39,6 +39,7 @@ void Initialize(void)
     pca9685_init();
     config_timer();
     configUltrasonicTimer();
+    configReflectanceTimer();
     config_nvic();
     start_timer();
 }
