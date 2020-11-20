@@ -139,3 +139,21 @@ uint8_t result;
   P5->OUT &= ~0x08;     // turn off 8 IR LEDs
   return result;
 }
+
+void configReflectanceTimer(void)
+{
+    TIMER_A2->CTL = TIMER_A_CTL_SSEL__SMCLK | TIMER_A_CTL_MC__STOP;
+    TIMER_A2->CCR[0] = 0xFFFF;
+}
+
+void startReflectanceTimer(void)
+{
+    TIMER_A2->CTL |= TIMER_A_CTL_CLR;
+    TIMER_A2->CTL |= TIMER_A_CTL_MC__UP | TIMER_A_CTL_SSEL__SMCLK;
+}
+
+uint16_t stopReflectanceTimer(void)
+{
+    TIMER_A2->CTL = TIMER_A_CTL_MC__STOP;
+    return TIMER_A2->R;
+}

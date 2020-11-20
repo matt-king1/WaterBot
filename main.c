@@ -20,11 +20,11 @@ void main(void)
     Initialize();
     P3->DIR |= BIT6; // Pin 3.5 is an output
 
-    double data; // variable to store reflectance values
+    int data; // variable to store reflectance values
 	while(1)
 	{
-	    data = readEcho();
-	    printf("Data: %f \n", data); // print distance
+	    data = Reflectance_Read(1000);
+	    printf("Data: %i \n", data); // print distance
 	}
 }
 
